@@ -69,7 +69,7 @@ with importdata:
     with preprocessing:
         st.subheader("Preprocessing")
         prepros = st.radio(
-            "Silahkan pilih metode yang digunakan :"
+            "Silahkan pilih metode yang digunakan :", 
             (["Min Max Scaler"]))
         prepoc = st.button("Preprocessing")
 
