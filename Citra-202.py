@@ -66,95 +66,97 @@ with importdata:
     st.write("Import Data")
     df = pd.read_csv("https://raw.githubusercontent.com/CitraIndahL/dataset/main/student-mat-pass-or-fail.csv")
     st.dataframe(data)
- with preprocessing:
-    st.subheader("Preprocessing")
-    prepros = st.radio(
-        "Silahkan pilih metode yang digunakan :"
-        (["Min Max Scaler"]))
-    prepoc = st.button("Preprocessing")
+    with preprocessing:
+        st.subheader("Preprocessing")
+        prepros = st.radio(
+            "Silahkan pilih metode yang digunakan :"
+            (["Min Max Scaler"]))
+        prepoc = st.button("Preprocessing")
 
-    if prepros == "Min Max Scaler":
-                if prepoc:
-                    df[["school","sex", "age", "address", "famsize", "Pstatus", "Medu", "Fedu", "traveltime", "studytime","failures","schoolsup","famsup", "paid", "activities", "nursery", "higher", "internet", "romantic","famrel","freetime", "goout", "Dalc", "Walc", "health", "absences", "G1", "G2", "G3"]].agg(['min','max'])
-                    df.Class.value_counts()
-                    X = df.drop(columns=["pass"],axis=1)
-                    y = df["pass"]
+        if prepros == "Min Max Scaler":
+            if prepoc:
+                df[["school","sex", "age", "address", "famsize", "Pstatus", "Medu", "Fedu", "traveltime", "studytime","failures","schoolsup","famsup", "paid", "activities", "nursery", "higher", "internet", "romantic","famrel","freetime", "goout", "Dalc", "Walc", "health", "absences", "G1", "G2", "G3"]].agg(['min','max'])
+                df.Class.value_counts()
+                X = df.drop(columns=["pass"],axis=1)
+                y = df["pass"]
 
-                    "### Normalize data transformasi"
-                    X
-                    X.shape, y.shape
-                    # le.inverse_transform(y)
-                    labels = pd.get_dummies(df.Class).columns.values.tolist()
-                    "### Label"
-                    labels
-                    """## Normalisasi MinMax Scaler"""
-                    scaler = MinMaxScaler()
-                    scaler.fit(X)
-                    X = scaler.transform(X)
-                    X
-                    X.shape, y.shape
+                "### Normalize data transformasi"
+                X
+                X.shape, y.shape
+                # le.inverse_transform(y)
+                labels = pd.get_dummies(df.Class).columns.values.tolist()
+                "### Label"
+                labels
+                """## Normalisasi MinMax Scaler"""
+                scaler = MinMaxScaler()
+                scaler.fit(X)
+                X = scaler.transform(X)
+                X
+                X.shape, y.shape
+                    
+                
 
-        with modelling:
-            X=df[["school","sex", "age", "address", "famsize", "Pstatus", "Medu", "Fedu", "traveltime", "studytime","failures","schoolsup","famsup", "paid", "activities", "nursery", "higher", "internet", "romantic","famrel","freetime", "goout", "Dalc", "Walc", "health", "absences", "G1", "G2", "G3"]]
-            y=df["pass"]
-            X_train,X_test,y_train,y_test = train_test_split(X,y,test_size=0.2,random_state=4)
-            from sklearn.preprocessing import StandardScaler
-            sc = StandardScaler()
-            X_train = sc.fit_transform(X_train)
-            X_test = sc.transform(X_test)
-            # from sklearn.feature_extraction.text import CountVectorizer
-            # cv = CountVectorizer()
-            # X_train = cv.fit_transform(X_train)
-            # X_test = cv.fit_transform(X_test)
-            st.subheader("Modeling")
-            st.write("Silahkan pilih Model :")
-            naive = st.checkbox('Naive Bayes')
-            kn = st.checkbox('K-Nearest Neighbor')
-            des = st.checkbox('Decision Tree')
-            mod = st.button("Modeling")
+    with modelling:
+        X=df[["school","sex", "age", "address", "famsize", "Pstatus", "Medu", "Fedu", "traveltime", "studytime","failures","schoolsup","famsup", "paid", "activities", "nursery", "higher", "internet", "romantic","famrel","freetime", "goout", "Dalc", "Walc", "health", "absences", "G1", "G2", "G3"]]
+        y=df["pass"]
+        X_train,X_test,y_train,y_test = train_test_split(X,y,test_size=0.2,random_state=4)
+        from sklearn.preprocessing import StandardScaler
+        sc = StandardScaler()
+        X_train = sc.fit_transform(X_train)
+        X_test = sc.transform(X_test)
+        # from sklearn.feature_extraction.text import CountVectorizer
+        # cv = CountVectorizer()
+        # X_train = cv.fit_transform(X_train)
+        # X_test = cv.fit_transform(X_test)
+        st.subheader("Modeling")
+        st.write("Silahkan pilih Model :")
+        naive = st.checkbox('Naive Bayes')
+        kn = st.checkbox('K-Nearest Neighbor')
+        des = st.checkbox('Decision Tree')
+        mod = st.button("Modeling")
 
-            # NB
-            GaussianNB(priors=None)
+        # NB
+        GaussianNB(priors=None)
 
-            # Fitting Naive Bayes Classification to the Training set with linear kernel
-            nvklasifikasi = GaussianNB()
-            nvklasifikasi = nvklasifikasi.fit(X_train, y_train)
+        # Fitting Naive Bayes Classification to the Training set with linear kernel
+        nvklasifikasi = GaussianNB()
+        nvklasifikasi = nvklasifikasi.fit(X_train, y_train)
 
-            # Predicting the Test set results
-            y_pred = nvklasifikasi.predict(X_test)
+        # Predicting the Test set results
+        y_pred = nvklasifikasi.predict(X_test)
             
-            y_compare = np.vstack((y_test,y_pred)).T
-            nvklasifikasi.predict_proba(X_test)
-            akurasi_nb = round(100 * accuracy_score(y_test, y_pred))
-            # akurasi_nb = 10
+        y_compare = np.vstack((y_test,y_pred)).T
+        nvklasifikasi.predict_proba(X_test)
+        akurasi_nb = round(100 * accuracy_score(y_test, y_pred))
+        # akurasi_nb = 10
 
-            # KNN 
-            K=10
-            knn=KNeighborsClassifier(n_neighbors=K)
-            knn.fit(X_train,y_train)
-            y_pred=knn.predict(X_test)
+        # KNN 
+        K=10
+        knn=KNeighborsClassifier(n_neighbors=K)
+        knn.fit(X_train,y_train)
+        y_pred=knn.predict(X_test)
 
-            akurasi_knn = round(100 * accuracy_score(y_test,y_pred))
+        akurasi_knn = round(100 * accuracy_score(y_test,y_pred))
 
-            # DT
+        # DT
 
-            dt = DecisionTreeClassifier()
-            dt.fit(X_train, y_train)
-            # prediction
-            dt.score(X_test, y_test)
-            y_pred = dt.predict(X_test)
-            #Accuracy
-            akurasi_dt = round(100 * accuracy_score(y_test,y_pred))
+        dt = DecisionTreeClassifier()
+        dt.fit(X_train, y_train)
+        # prediction
+        dt.score(X_test, y_test)
+        y_pred = dt.predict(X_test)
+        #Accuracy
+        akurasi_dt = round(100 * accuracy_score(y_test,y_pred))
 
-            if naive :
-                if mod :
-                    st.write('Model Naive Bayes accuracy score: {0:0.2f}'. format(akurasi_nb))
-            if kn :
-                if mod:
-                    st.write("Model KNN accuracy score : {0:0.2f}" . format(akurasi_knn))
-            if des :
-                if mod :
-                    st.write("Model Decision Tree accuracy score : {0:0.2f}" . format(akurasi_dt))
+        if naive :
+            if mod :
+                st.write('Model Naive Bayes accuracy score: {0:0.2f}'. format(akurasi_nb))
+        if kn :
+            if mod:
+                st.write("Model KNN accuracy score : {0:0.2f}" . format(akurasi_knn))
+        if des :
+            if mod :
+                st.write("Model Decision Tree accuracy score : {0:0.2f}" . format(akurasi_dt))
 
 
         
