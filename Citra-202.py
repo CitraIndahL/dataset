@@ -21,7 +21,7 @@ st.set_page_config(page_title="Body Performance", page_icon='icon.png', layout="
 
 st.title("UAS PENAMBANGAN DATA")
 
-description, importdata,preprocessing ,implementation = st.tabs(["Deskripsi ", "Import Data"," Preprocessing ", " Implementation"])
+description, importdata,preprocessing ,modelling, implementation = st.tabs(["Deskripsi ", "Import Data"," Preprocessing "," Modelling", " Implementation"])
 # warnings.filterwarnings("ignore")
 with description:
     st.subheader("Deskripsi")
