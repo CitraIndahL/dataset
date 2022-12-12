@@ -21,7 +21,7 @@ st.set_page_config(page_title="Body Performance", page_icon='icon.png', layout="
 
 st.title("UAS PENAMBANGAN DATA")
 
-description, importdata,preprocessing ,implementation = st.tabs(["Deskripsi ", "Preprocessing"," Import Data ", " Implementation"])
+description, importdata,preprocessing ,implementation = st.tabs(["Deskripsi ", "Import Data"," Preprocessing ", " Implementation"])
 # warnings.filterwarnings("ignore")
 with description:
     st.subheader("Deskripsi")
@@ -63,19 +63,17 @@ with description:
     st.write("Link github https://github.com/CitraIndahL/dataset")
 
 with importdata:
-    dataset, preprocessing, modelling = st.tabs(["Dataset", "Preprocessing", "Modelling"])
-    with dataset:
-            st.write("Import Data")
-            df = pd.read_csv("https://raw.githubusercontent.com/CitraIndahL/dataset/main/student-mat-pass-or-fail.csv")
-            st.dataframe(data)
+    st.write("Import Data")
+    df = pd.read_csv("https://raw.githubusercontent.com/CitraIndahL/dataset/main/student-mat-pass-or-fail.csv")
+    st.dataframe(data)
  with preprocessing:
-            st.subheader("Preprocessing")
-            prepros = st.radio(
-            "Silahkan pilih metode yang digunakan :",
-            (["Min Max Scaler"]))
-            prepoc = st.button("Preprocessing")
+    st.subheader("Preprocessing")
+    prepros = st.radio(
+        "Silahkan pilih metode yang digunakan :"
+        (["Min Max Scaler"]))
+    prepoc = st.button("Preprocessing")
 
-            if prepros == "Min Max Scaler":
+    if prepros == "Min Max Scaler":
                 if prepoc:
                     df[["school","sex", "age", "address", "famsize", "Pstatus", "Medu", "Fedu", "traveltime", "studytime","failures","schoolsup","famsup", "paid", "activities", "nursery", "higher", "internet", "romantic","famrel","freetime", "goout", "Dalc", "Walc", "health", "absences", "G1", "G2", "G3"]].agg(['min','max'])
                     df.Class.value_counts()
