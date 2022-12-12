@@ -94,36 +94,34 @@ with importdata:
                 X
                 X.shape, y.shape
                     
-                
+with modelling:
+    X=df[["school","sex", "age", "address", "famsize", "Pstatus", "Medu", "Fedu", "traveltime", "studytime","failures","schoolsup","famsup", "paid", "activities", "nursery", "higher", "internet", "romantic","famrel","freetime", "goout", "Dalc", "Walc", "health", "absences", "G1", "G2", "G3"]]
+    y=df["pass"]
+    X_train,X_test,y_train,y_test = train_test_split(X,y,test_size=0.2,random_state=4)
+    from sklearn.preprocessing import StandardScaler
+    sc = StandardScaler()
+    X_train = sc.fit_transform(X_train)
+    X_test = sc.transform(X_test)
+    # from sklearn.feature_extraction.text import CountVectorizer
+    # cv = CountVectorizer()
+    # X_train = cv.fit_transform(X_train)
+    # X_test = cv.fit_transform(X_test)
+    st.subheader("Modeling")
+    st.write("Silahkan pilih Model :")
+    naive = st.checkbox('Naive Bayes')
+    kn = st.checkbox('K-Nearest Neighbor')
+    des = st.checkbox('Decision Tree')
+    mod = st.button("Modeling")
 
-    with modelling:
-        X=df[["school","sex", "age", "address", "famsize", "Pstatus", "Medu", "Fedu", "traveltime", "studytime","failures","schoolsup","famsup", "paid", "activities", "nursery", "higher", "internet", "romantic","famrel","freetime", "goout", "Dalc", "Walc", "health", "absences", "G1", "G2", "G3"]]
-        y=df["pass"]
-        X_train,X_test,y_train,y_test = train_test_split(X,y,test_size=0.2,random_state=4)
-        from sklearn.preprocessing import StandardScaler
-        sc = StandardScaler()
-        X_train = sc.fit_transform(X_train)
-        X_test = sc.transform(X_test)
-        # from sklearn.feature_extraction.text import CountVectorizer
-        # cv = CountVectorizer()
-        # X_train = cv.fit_transform(X_train)
-        # X_test = cv.fit_transform(X_test)
-        st.subheader("Modeling")
-        st.write("Silahkan pilih Model :")
-        naive = st.checkbox('Naive Bayes')
-        kn = st.checkbox('K-Nearest Neighbor')
-        des = st.checkbox('Decision Tree')
-        mod = st.button("Modeling")
+    # NB
+    GaussianNB(priors=None)
 
-        # NB
-        GaussianNB(priors=None)
+    # Fitting Naive Bayes Classification to the Training set with linear kernel
+    nvklasifikasi = GaussianNB()
+    nvklasifikasi = nvklasifikasi.fit(X_train, y_train)
 
-        # Fitting Naive Bayes Classification to the Training set with linear kernel
-        nvklasifikasi = GaussianNB()
-        nvklasifikasi = nvklasifikasi.fit(X_train, y_train)
-
-        # Predicting the Test set results
-        y_pred = nvklasifikasi.predict(X_test)
+    # Predicting the Test set results
+    y_pred = nvklasifikasi.predict(X_test)
             
         y_compare = np.vstack((y_test,y_pred)).T
         nvklasifikasi.predict_proba(X_test)
