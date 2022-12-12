@@ -65,7 +65,7 @@ with description:
 with importdata:
     st.write("Import Data")
     df = pd.read_csv("https://raw.githubusercontent.com/CitraIndahL/dataset/main/student-mat-pass-or-fail.csv")
-    st.dataframe(data)
+    st.dataframe(df)
     with preprocessing:
         st.subheader("Preprocessing")
         prepros = st.radio(
