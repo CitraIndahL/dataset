@@ -123,31 +123,31 @@ with modelling:
     # Predicting the Test set results
     y_pred = nvklasifikasi.predict(X_test)
             
-        y_compare = np.vstack((y_test,y_pred)).T
-        nvklasifikasi.predict_proba(X_test)
-        akurasi_nb = round(100 * accuracy_score(y_test, y_pred))
-        # akurasi_nb = 10
+    y_compare = np.vstack((y_test,y_pred)).T
+    nvklasifikasi.predict_proba(X_test)
+    akurasi_nb = round(100 * accuracy_score(y_test, y_pred))
+    # akurasi_nb = 10
 
-        # KNN 
-        K=10
-        knn=KNeighborsClassifier(n_neighbors=K)
-        knn.fit(X_train,y_train)
-        y_pred=knn.predict(X_test)
+    # KNN 
+    K=10
+    knn=KNeighborsClassifier(n_neighbors=K)
+    knn.fit(X_train,y_train)
+    y_pred=knn.predict(X_test)
 
-        akurasi_knn = round(100 * accuracy_score(y_test,y_pred))
+    akurasi_knn = round(100 * accuracy_score(y_test,y_pred))
 
-        # DT
+    # DT
 
-        dt = DecisionTreeClassifier()
-        dt.fit(X_train, y_train)
-        # prediction
-        dt.score(X_test, y_test)
-        y_pred = dt.predict(X_test)
-        #Accuracy
-        akurasi_dt = round(100 * accuracy_score(y_test,y_pred))
-
-        if naive :
-            if mod :
+    dt = DecisionTreeClassifier()
+    dt.fit(X_train, y_train)
+    # prediction
+    dt.score(X_test, y_test)
+    y_pred = dt.predict(X_test)
+    #Accuracy
+    
+    akurasi_dt = round(100 * accuracy_score(y_test,y_pred))
+    if naive :
+        if mod :
                 st.write('Model Naive Bayes accuracy score: {0:0.2f}'. format(akurasi_nb))
         if kn :
             if mod:
@@ -155,10 +155,7 @@ with modelling:
         if des :
             if mod :
                 st.write("Model Decision Tree accuracy score : {0:0.2f}" . format(akurasi_dt))
-
-
-        
-    
+                
 with implementation:
     st.subheader("Implementation")
     school = st.number_input('Masukkan sekolah siswa (1 : Garbiel Pereira, 0 : Mousinho da Silveria)')
